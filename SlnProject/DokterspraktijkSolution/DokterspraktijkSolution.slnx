@@ -1,1 +1,5 @@
-<Solution />
+<Solution>
+  <Project Path="DokterApp/DokterApp.csproj" Id="def08a9a-8855-4350-a394-10a9f48b1982" />
+  <Project Path="Lib/Lib.csproj" />
+  <Project Path="PatientApp/PatientApp.csproj" Id="b31c6125-5e17-425d-a420-78307a648d86" />
+</Solution>

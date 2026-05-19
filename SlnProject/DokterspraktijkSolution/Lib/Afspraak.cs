@@ -7,6 +7,8 @@ namespace Lib
     /// </summary>
     public class Afspraak
     {
+        
+
         // Properties
         public int Id { get; set; }
         public DateTime Moment { get; set; }
