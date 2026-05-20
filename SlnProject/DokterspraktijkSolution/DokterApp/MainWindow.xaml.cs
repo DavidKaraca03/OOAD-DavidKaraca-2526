@@ -22,10 +22,37 @@ namespace DokterApp
             HoofdFrame.Navigate(new LoginPage());
         }
 
-        // Maakt het navigatiepaneel zichtbaar na succesvolle login
+        /// <summary>
+        /// Maakt het navigatiepaneel zichtbaar en navigeert naar de afsprakenpagina.
+        /// Wordt opgeroepen vanuit LoginPage na succesvolle login.
+        /// </summary>
         public void ToonNavigatie()
         {
             NavPanel.Visibility = Visibility.Visible;
+            HoofdFrame.Navigate(new AfsprakenPage());
+        }
+
+        // Navigeer naar de afsprakenpagina
+        private void BtnAfspraken_Click(object sender, RoutedEventArgs e)
+        {
+            HoofdFrame.Navigate(new AfsprakenPage());
+        }
+
+        // Navigeer naar het patiëntenoverzicht
+        private void BtnPatienten_Click(object sender, RoutedEventArgs e)
+        {
+            HoofdFrame.Navigate(new PatientenOverzichtPage());
+        }
+
+        // Afmelden: verberg navigatie en keer terug naar loginpagina
+        private void BtnAfmelden_Click(object sender, RoutedEventArgs e)
+        {
+            // ingelogde dokter wissen
+            IngelogdeDokter = null;
+
+            // navigatiepaneel verbergen en terug naar login
+            NavPanel.Visibility = Visibility.Collapsed;
+            HoofdFrame.Navigate(new LoginPage());
         }
     }
 }

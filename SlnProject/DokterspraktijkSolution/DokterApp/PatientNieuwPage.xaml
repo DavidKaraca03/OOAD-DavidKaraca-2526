@@ -1,0 +1,129 @@
+<Page x:Class="DokterApp.PatientNieuwPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Nieuwe patiënt"
+      Loaded="Page_Loaded">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Paginatitel -->
+        <TextBlock Grid.Row="0" Text="Nieuwe patiënt aanmaken"
+                   FontSize="22" FontWeight="Bold" Margin="0,0,0,16" />
+
+        <!-- Foutmelding -->
+        <TextBlock Grid.Row="1" x:Name="TxtFout"
+                   Foreground="Red" TextWrapping="Wrap" Margin="0,0,0,10" />
+
+        <!-- Formulier -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <Grid MaxWidth="500" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Foto -->
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Foto:" FontWeight="Bold"
+                           VerticalAlignment="Center" Margin="0,0,0,12" />
+                <StackPanel Grid.Row="0" Grid.Column="1"
+                            Orientation="Horizontal" Margin="0,0,0,12">
+                    <Image x:Name="ImgFoto" Width="80" Height="80"
+                           Margin="0,0,12,0" />
+                    <Button Content="Foto kiezen..."
+                            Click="BtnFotoKiezen_Click"
+                            VerticalAlignment="Bottom" Padding="10,5" />
+                </StackPanel>
+
+                <!-- Voornaam -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Voornaam *:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <TextBox Grid.Row="1" Grid.Column="1"
+                         x:Name="TxtVoornaam" Padding="6,4" Margin="0,0,0,8" />
+
+                <!-- Achternaam -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Achternaam *:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <TextBox Grid.Row="2" Grid.Column="1"
+                         x:Name="TxtAchternaam" Padding="6,4" Margin="0,0,0,8" />
+
+                <!-- E-mail -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="E-mail *:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <TextBox Grid.Row="3" Grid.Column="1"
+                         x:Name="TxtEmail" Padding="6,4" Margin="0,0,0,8" />
+
+                <!-- GSM -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="GSM:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <TextBox Grid.Row="4" Grid.Column="1"
+                         x:Name="TxtGsm" Padding="6,4" Margin="0,0,0,8" />
+
+                <!-- Geslacht -->
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Geslacht:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <ComboBox Grid.Row="5" Grid.Column="1"
+                          x:Name="CboGeslacht" Margin="0,0,0,8" Padding="4">
+                    <ComboBoxItem Content="Onbekend" />
+                    <ComboBoxItem Content="Man" />
+                    <ComboBoxItem Content="Vrouw" />
+                </ComboBox>
+
+                <!-- Geboortedatum -->
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Geboortedatum *:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <TextBox Grid.Row="6" Grid.Column="1"
+                         x:Name="TxtGeboortedatum" Padding="6,4" Margin="0,0,0,8"
+                         ToolTip="Formaat: dd/MM/yyyy" />
+
+                <!-- Notificaties -->
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Notificaties:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <ComboBox Grid.Row="7" Grid.Column="1"
+                          x:Name="CboNotificaties" Margin="0,0,0,8" Padding="4">
+                    <ComboBoxItem Content="Geen" />
+                    <ComboBoxItem Content="Mail" />
+                    <ComboBoxItem Content="Sms" />
+                    <ComboBoxItem Content="Beide" />
+                </ComboBox>
+
+                <!-- Wachtwoord -->
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Wachtwoord *:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <PasswordBox Grid.Row="8" Grid.Column="1"
+                             x:Name="TxtPaswoord" Padding="6,4" Margin="0,0,0,8" />
+
+                <!-- Wachtwoord bevestigen -->
+                <TextBlock Grid.Row="9" Grid.Column="0" Text="Herhaal wachtwoord *:"
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <PasswordBox Grid.Row="9" Grid.Column="1"
+                             x:Name="TxtPaswoordBevestig" Padding="6,4" Margin="0,0,0,8" />
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Actieknoppen -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,16,0,0">
+            <Button Content="Aanmaken"   Click="BtnAanmaken_Click"
+                    Padding="18,6" Margin="0,0,10,0" />
+            <Button Content="Annuleren" Click="BtnAnnuleren_Click"
+                    Padding="18,6" />
+        </StackPanel>
+    </Grid>
+</Page>

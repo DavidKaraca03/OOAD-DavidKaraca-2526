@@ -1,0 +1,44 @@
+<Page x:Class="DokterApp.AfsprakenPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Afspraken"
+      Loaded="Page_Loaded">
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <!-- Linker kolom: kalender -->
+            <ColumnDefinition Width="Auto" />
+            <!-- Rechter kolom: afsprakenoverzicht -->
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Kalender -->
+        <StackPanel Grid.Column="0" Margin="0,0,24,0">
+            <TextBlock Text="Selecteer een datum"
+                       FontWeight="Bold" Margin="0,0,0,8" />
+            <Calendar x:Name="Kalender"
+                      SelectedDatesChanged="Kalender_SelectionChanged" />
+        </StackPanel>
+
+        <!-- Afsprakenoverzicht -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Datum als header -->
+            <TextBlock Grid.Row="0" x:Name="TxtDatumHeader"
+                       FontSize="18" FontWeight="Bold" Margin="0,0,0,6" />
+
+            <!-- Foutmelding -->
+            <TextBlock Grid.Row="1" x:Name="TxtFout"
+                       Foreground="Red" TextWrapping="Wrap" Margin="0,0,0,8" />
+
+            <!-- Lijst van afspraken als cards -->
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="PnlAfspraken" />
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>
