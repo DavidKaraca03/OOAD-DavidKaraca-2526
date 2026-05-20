@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lib;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PatientApp
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Hoofdvenster van de PatientApp. Bevat navigatiepaneel en hoofdframe.
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Bijhouden welke patiënt momenteel is ingelogd
+        public static Patient IngelogdePatient { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        // Navigeer naar de loginpagina bij het openen van het venster
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            HoofdFrame.Navigate(new LoginPage());
+        }
+
+        // Maakt het navigatiepaneel zichtbaar na succesvolle login
+        public void ToonNavigatie()
+        {
+            NavPanel.Visibility = Visibility.Visible;
         }
     }
 }

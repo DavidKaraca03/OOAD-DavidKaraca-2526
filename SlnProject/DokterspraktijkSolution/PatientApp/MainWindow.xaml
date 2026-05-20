@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PatientApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Dokterspraktijk – Patiënt" Height="600" Width="900"
+        Loaded="Window_Loaded">
+    <DockPanel>
+        <!-- Linker navigatiepaneel, verborgen tot na login -->
+        <StackPanel x:Name="NavPanel" DockPanel.Dock="Left" Width="160"
+                    Background="#1A5276" Visibility="Collapsed">
+            <Button Content="Mijn afspraken" Margin="10,20,10,5" />
+            <Button Content="Nieuw afspraak" Margin="10,5,10,5" />
+            <Button Content="Mijn profiel"   Margin="10,5,10,5" />
+            <Button Content="Afmelden"       Margin="10,5,10,5" />
+        </StackPanel>
+        <!-- Hoofdframe voor paginanavigatie -->
+        <Frame x:Name="HoofdFrame" NavigationUIVisibility="Hidden" />
+    </DockPanel>
 </Window>

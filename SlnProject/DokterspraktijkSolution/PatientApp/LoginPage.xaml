@@ -1,0 +1,18 @@
+<Page x:Class="PatientApp.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Inloggen">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
+        <StackPanel>
+            <TextBlock Text="Dokterspraktijk" FontSize="22" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,0,0,24" />
+            <TextBlock Text="E-mail" />
+            <TextBox x:Name="TxtEmail" Margin="0,2,0,12" />
+            <TextBlock Text="Wachtwoord" />
+            <PasswordBox x:Name="TxtPaswoord" Margin="0,2,0,16" />
+            <Button Content="Inloggen" Click="BtnInloggen_Click" Padding="0,6" />
+            <!-- Foutmelding wordt hier getoond -->
+            <TextBlock x:Name="TxtFout" Foreground="Red" TextWrapping="Wrap" Margin="0,10,0,0" />
+        </StackPanel>
+    </Grid>
+</Page>
