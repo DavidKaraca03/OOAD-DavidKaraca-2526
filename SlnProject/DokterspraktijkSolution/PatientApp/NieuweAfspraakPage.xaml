@@ -1,0 +1,47 @@
+<Page x:Class="PatientApp.NieuweAfspraakPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Nieuwe afspraak"
+      Loaded="Page_Loaded">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16" MaxWidth="480" HorizontalAlignment="Left">
+
+            <!-- Paginatitel -->
+            <TextBlock Text="Nieuwe afspraak maken"
+                       FontSize="20" FontWeight="Bold" Margin="0,0,0,20" />
+
+            <!-- Dokterkeuze -->
+            <TextBlock Text="Kies een dokter:" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <ListBox x:Name="LstDokters" Height="140"
+                     Margin="0,0,0,16" />
+
+            <!-- Datum -->
+            <TextBlock Text="Datum (dd/MM/yyyy):" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <TextBox x:Name="TxtDatum" Margin="0,0,0,16" Padding="4" />
+
+            <!-- Tijdstip -->
+            <TextBlock Text="Tijdstip (HH:mm):" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <TextBox x:Name="TxtTijdstip" Margin="0,0,0,16" Padding="4" />
+
+            <!-- Klacht -->
+            <TextBlock Text="Klacht / reden van bezoek:" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <TextBox x:Name="TxtKlacht" Height="80"
+                     TextWrapping="Wrap" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     Margin="0,0,0,16" Padding="4" />
+
+            <!-- Foutmelding -->
+            <TextBlock x:Name="TxtFout" Foreground="Red"
+                       TextWrapping="Wrap" Margin="0,0,0,8" />
+
+            <!-- Actieknoppen -->
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Opslaan" Padding="14,6"
+                        Margin="0,0,10,0" Click="BtnOpslaan_Click" />
+                <Button Content="Annuleren" Padding="14,6"
+                        Click="BtnAnnuleren_Click" />
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

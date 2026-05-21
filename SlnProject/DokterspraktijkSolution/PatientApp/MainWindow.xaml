@@ -11,10 +11,14 @@
         <!-- Linker navigatiepaneel, verborgen tot na login -->
         <StackPanel x:Name="NavPanel" DockPanel.Dock="Left" Width="160"
                     Background="#1A5276" Visibility="Collapsed">
-            <Button Content="Mijn afspraken" Margin="10,20,10,5" />
-            <Button Content="Nieuw afspraak" Margin="10,5,10,5" />
-            <Button Content="Mijn profiel"   Margin="10,5,10,5" />
-            <Button Content="Afmelden"       Margin="10,5,10,5" />
+            <Button Content="Mijn afspraken" Margin="10,20,10,5"
+                    Click="BtnAfspraken_Click" />
+            <Button Content="Nieuwe afspraak" Margin="10,5,10,5"
+                    Click="BtnNieuweAfspraak_Click" />
+            <Button Content="Mijn profiel"   Margin="10,5,10,5"
+                    Click="BtnProfiel_Click" />
+            <Button Content="Afmelden"       Margin="10,5,10,5"
+                    Click="BtnAfmelden_Click" />
         </StackPanel>
         <!-- Hoofdframe voor paginanavigatie -->
         <Frame x:Name="HoofdFrame" NavigationUIVisibility="Hidden" />
