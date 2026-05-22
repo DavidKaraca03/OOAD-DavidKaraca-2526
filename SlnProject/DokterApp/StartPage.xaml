@@ -1,0 +1,112 @@
+<Page x:Class="DokterApp.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Welkom">
+
+    <Page.Resources>
+        <Style x:Key="PrimaireKnop" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Rand" Background="{TemplateBinding Background}"
+                                CornerRadius="7" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Rand" Property="Background" Value="#2D5078" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Rand" Property="Background" Value="#0F1E34" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!-- Gradient achtergrond -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#0F1E34" Offset="0" />
+                <GradientStop Color="#1B2F4E" Offset="0.5" />
+                <GradientStop Color="#2D5078" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Gecentreerde witte kaart -->
+        <Border HorizontalAlignment="Center" VerticalAlignment="Center"
+                Background="White" CornerRadius="14"
+                Padding="52,42,52,42" Width="460">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" Opacity="0.20"
+                                  BlurRadius="30" ShadowDepth="6" Direction="270" />
+            </Border.Effect>
+
+            <StackPanel>
+                <!-- Logo + naam -->
+                <TextBlock Text="🏥" FontSize="52" HorizontalAlignment="Center" Margin="0,0,0,12" />
+                <TextBlock Text="DoktorsPortaal" FontSize="28" FontWeight="Bold"
+                           Foreground="#1B2F4E" HorizontalAlignment="Center" Margin="0,0,0,4" />
+                <TextBlock Text="Dokter applicatie" FontSize="14" Foreground="#64748B"
+                           HorizontalAlignment="Center" Margin="0,0,0,28" />
+
+                <!-- Scheidingslijn -->
+                <Border Height="1" Background="#E2E8F0" Margin="0,0,0,24" />
+
+                <!-- Functies -->
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="34" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="📅" FontSize="17" VerticalAlignment="Top" Margin="0,1,0,0" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Afsprakenbeheer" FontWeight="SemiBold" Foreground="#1E293B" FontSize="14" />
+                        <TextBlock Text="Bekijk uw agenda per dag via de kalender en annuleer afspraken."
+                                   Foreground="#64748B" FontSize="12" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="34" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="👥" FontSize="17" VerticalAlignment="Top" Margin="0,1,0,0" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Patiëntenoverzicht" FontWeight="SemiBold" Foreground="#1E293B" FontSize="14" />
+                        <TextBlock Text="Zoek, raadpleeg en beheer alle patiëntendossiers."
+                                   Foreground="#64748B" FontSize="12" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="34" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="✏️" FontSize="17" VerticalAlignment="Top" Margin="0,1,0,0" />
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Patiënten bewerken" FontWeight="SemiBold" Foreground="#1E293B" FontSize="14" />
+                        <TextBlock Text="Voeg nieuwe patiënten toe en pas hun gegevens aan."
+                                   Foreground="#64748B" FontSize="12" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- CTA knop -->
+                <Button Content="Aanmelden" Click="BtnAanmelden_Click"
+                        HorizontalAlignment="Stretch" Padding="0,14"
+                        Background="#1B2F4E"
+                        Style="{StaticResource PrimaireKnop}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

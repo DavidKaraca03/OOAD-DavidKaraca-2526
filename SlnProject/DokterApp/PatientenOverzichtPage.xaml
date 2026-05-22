@@ -1,0 +1,78 @@
+<Page x:Class="DokterApp.PatientenOverzichtPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Patiëntenoverzicht"
+      Loaded="Page_Loaded">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <!-- Paginatitel en beschrijving -->
+            <RowDefinition Height="Auto" />
+            <!-- Zoekbalk en nieuwe-patiëntknop -->
+            <RowDefinition Height="Auto" />
+            <!-- Foutmelding -->
+            <RowDefinition Height="Auto" />
+            <!-- Gridweergave patiënten -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Paginatitel -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="👥  Patiëntenoverzicht"
+                       FontSize="22" FontWeight="Bold" Margin="0,0,0,4" />
+            <TextBlock Text="Zoek en beheer patiënten, bekijk hun details of voeg een nieuwe patiënt toe."
+                       TextWrapping="Wrap" Foreground="#555555" />
+        </StackPanel>
+
+        <!-- Zoekbalk -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,12">
+            <TextBox x:Name="TxtZoek" Width="260" Padding="6,4"
+                     Margin="0,0,8,0" />
+            <Button Content="Zoeken" Click="BtnZoeken_Click"
+                    Padding="14,4" Margin="0,0,8,0" />
+            <Button Content="Alle patiënten" Click="BtnAlles_Click"
+                    Padding="14,4" Margin="0,0,16,0" />
+            <Button Content="+ Nieuwe patiënt" Click="BtnNieuw_Click"
+                    Padding="14,4" />
+        </StackPanel>
+
+        <!-- Foutmelding -->
+        <TextBlock Grid.Row="2" x:Name="TxtFout"
+                   Foreground="Red" TextWrapping="Wrap" Margin="0,0,0,8" />
+
+        <!-- Gridweergave: vaste header + scrollbare rijen -->
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Kolomheaders -->
+            <Border Grid.Row="0" Background="#2C3E50" Padding="10,7">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="115" />
+                        <ColumnDefinition Width="135" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Naam"
+                               Foreground="White" FontWeight="Bold" />
+                    <TextBlock Grid.Column="1" Text="Geboortedatum"
+                               Foreground="White" FontWeight="Bold" />
+                    <TextBlock Grid.Column="2" Text="GSM"
+                               Foreground="White" FontWeight="Bold" />
+                    <TextBlock Grid.Column="3" Text="E-mail"
+                               Foreground="White" FontWeight="Bold" />
+                    <TextBlock Grid.Column="4" Text=""
+                               Foreground="White" FontWeight="Bold" />
+                </Grid>
+            </Border>
+
+            <!-- Scrollbare patiëntenrijen -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="PnlPatienten" />
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

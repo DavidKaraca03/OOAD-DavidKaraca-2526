@@ -1,0 +1,88 @@
+<Page x:Class="PatientApp.NieuweAfspraakPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Nieuwe afspraak"
+      Loaded="Page_Loaded">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16" MaxWidth="480" HorizontalAlignment="Left">
+
+            <!-- Paginatitel -->
+            <TextBlock Text="Nieuwe afspraak maken"
+                       FontSize="20" FontWeight="Bold" Margin="0,0,0,20" />
+
+            <!-- Dokterkeuze -->
+            <TextBlock Text="Kies een dokter:" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <ListBox x:Name="LstDokters" Height="140"
+                     SelectionChanged="LstDokters_SelectionChanged"
+                     Margin="0,0,0,8" />
+
+            <!-- Basisinfo van de geselecteerde dokter, verborgen tot selectie -->
+            <Border x:Name="PnlDokterInfo" Visibility="Collapsed"
+                    BorderBrush="#1A5276" BorderThickness="1"
+                    CornerRadius="4" Padding="12" Margin="0,0,0,16"
+                    Background="#EBF5FB">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Naam -->
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Naam:" FontWeight="Bold" Margin="0,0,12,4" />
+                    <TextBlock Grid.Row="0" Grid.Column="1"
+                               x:Name="LblDokterNaam" Margin="0,0,0,4" />
+
+                    <!-- RIZIV-nummer -->
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="RIZIV-nummer:" FontWeight="Bold" Margin="0,0,12,4" />
+                    <TextBlock Grid.Row="1" Grid.Column="1"
+                               x:Name="LblDokterRiziv" Margin="0,0,0,4" />
+
+                    <!-- Geconventioneerd -->
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Geconventioneerd:" FontWeight="Bold" Margin="0,0,12,0" />
+                    <TextBlock Grid.Row="2" Grid.Column="1"
+                               x:Name="LblDokterGeconventioneerd" />
+                </Grid>
+            </Border>
+
+            <!-- Datum -->
+            <TextBlock Text="Datum:" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <DatePicker x:Name="DpDatum" Margin="0,0,0,16"
+                        SelectedDateChanged="DpDatum_SelectedDateChanged" />
+
+            <!-- Tijdstip: beschikbare sloten van 08:00–17:30 (interval 30 min) -->
+            <TextBlock Text="Tijdstip:" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <ComboBox x:Name="CboTijdstip" Margin="0,0,0,4" Padding="4" />
+            <TextBlock Text="Selecteer eerst een dokter en datum om beschikbare tijdsloten te laden."
+                       Foreground="Gray" FontSize="11" Margin="0,0,0,16" />
+
+            <!-- Klacht -->
+            <TextBlock Text="Klacht / reden van bezoek:" FontWeight="SemiBold" Margin="0,0,0,4" />
+            <TextBox x:Name="TxtKlacht" Height="80"
+                     TextWrapping="Wrap" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     Margin="0,0,0,16" Padding="4" />
+
+            <!-- Foutmelding -->
+            <TextBlock x:Name="TxtFout" Foreground="Red"
+                       TextWrapping="Wrap" Margin="0,0,0,8" />
+
+            <!-- Actieknoppen -->
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Opslaan" Padding="14,6"
+                        Margin="0,0,10,0" Click="BtnOpslaan_Click" />
+                <Button Content="Annuleren" Padding="14,6"
+                        Click="BtnAnnuleren_Click" />
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

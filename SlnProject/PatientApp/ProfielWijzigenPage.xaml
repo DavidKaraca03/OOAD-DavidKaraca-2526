@@ -1,18 +1,22 @@
-<Page x:Class="DokterApp.PatientWijzigenPage"
+<Page x:Class="PatientApp.ProfielWijzigenPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Patiënt wijzigen"
+      Title="Profiel wijzigen"
       Loaded="Page_Loaded">
     <Grid Margin="24">
         <Grid.RowDefinitions>
+            <!-- Paginatitel -->
             <RowDefinition Height="Auto" />
+            <!-- Foutmelding -->
             <RowDefinition Height="Auto" />
+            <!-- Formulier -->
             <RowDefinition Height="*" />
+            <!-- Actieknoppen -->
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Paginatitel -->
-        <TextBlock Grid.Row="0" Text="Patiënt wijzigen"
+        <TextBlock Grid.Row="0" Text="Mijn profiel wijzigen"
                    FontSize="22" FontWeight="Bold" Margin="0,0,0,16" />
 
         <!-- Foutmelding -->

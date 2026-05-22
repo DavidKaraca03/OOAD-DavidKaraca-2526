@@ -25,6 +25,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <!-- Details van geselecteerde afspraak -->
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!-- Datum als header -->
@@ -39,6 +41,29 @@
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="PnlAfspraken" />
             </ScrollViewer>
+
+            <!-- Details van de geselecteerde afspraak, verborgen tot selectie -->
+            <Border Grid.Row="3" x:Name="PnlGeselecteerd"
+                    Visibility="Collapsed"
+                    BorderBrush="#2C3E50" BorderThickness="1"
+                    CornerRadius="4" Padding="14" Margin="0,12,0,0"
+                    Background="#F4F6F7">
+                <StackPanel>
+                    <!-- Tijdstip en patiënt van de geselecteerde afspraak -->
+                    <TextBlock x:Name="LblGeselecteerdHeader"
+                               FontWeight="Bold" FontSize="14" Margin="0,0,0,6" />
+                    <!-- Klacht / reden van bezoek -->
+                    <TextBlock Text="Reden van consultatie:" FontWeight="SemiBold" Margin="0,0,0,2" />
+                    <TextBlock x:Name="LblGeselecteerdKlacht"
+                               TextWrapping="Wrap" Margin="0,0,0,12" />
+                    <!-- Annuleerknop -->
+                    <Button x:Name="BtnAnnuleren" Content="Afspraak annuleren"
+                            Click="BtnAnnuleren_Click"
+                            Visibility="Collapsed"
+                            HorizontalAlignment="Left" Padding="12,5"
+                            Foreground="White" Background="#C0392B" />
+                </StackPanel>
+            </Border>
         </Grid>
     </Grid>
 </Page>

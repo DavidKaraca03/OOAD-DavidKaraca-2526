@@ -1,16 +1,14 @@
 using Lib;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace DokterApp
 {
     /// <summary>
-    /// Toont een overzicht van alle patiënten als dynamische kaarten in een WrapPanel.
+    /// Toont een gridweergave van alle patiënten met kolomheaders.
     /// </summary>
     public partial class PatientenOverzichtPage : Page
     {
@@ -32,7 +30,7 @@ namespace DokterApp
             }
         }
 
-        // Zoek patiënten op naam en laad de resultaten
+        // Zoek patiënten op naam
         private void BtnZoeken_Click(object sender, RoutedEventArgs e)
         {
             TxtFout.Text = string.Empty;
@@ -40,7 +38,6 @@ namespace DokterApp
 
             try
             {
-                // lege zoekterm toont alle patiënten
                 if (string.IsNullOrWhiteSpace(zoekterm))
                 {
                     LaadPatienten(Patient.GetAll());
@@ -73,93 +70,97 @@ namespace DokterApp
         }
 
         /// <summary>
-        /// Vult het WrapPanel met een kaart voor elke patiënt in de lijst.
+        /// Vult het patiëntenpaneel met een rij per patiënt in de lijst.
         /// </summary>
         private void LaadPatienten(List<Patient> patienten)
         {
-            // paneel leegmaken
             PnlPatienten.Children.Clear();
 
-            // melding tonen als er geen resultaten zijn
             if (patienten.Count == 0)
             {
                 TextBlock lblLeeg = new TextBlock();
                 lblLeeg.Text = "Geen patiënten gevonden.";
                 lblLeeg.Foreground = Brushes.Gray;
                 lblLeeg.FontStyle = FontStyles.Italic;
-                lblLeeg.Margin = new Thickness(5);
+                lblLeeg.Margin = new Thickness(10, 8, 0, 0);
                 PnlPatienten.Children.Add(lblLeeg);
                 return;
             }
 
-            // voor elke patiënt een kaart aanmaken
+            int rijIndex = 0;
             foreach (Patient p in patienten)
             {
-                Border kaart = MaakPatientKaart(p);
-                PnlPatienten.Children.Add(kaart);
+                Border rij = MaakPatientRij(p, rijIndex);
+                PnlPatienten.Children.Add(rij);
+                rijIndex++;
             }
         }
 
         /// <summary>
-        /// Maakt een visuele card aan voor één patiënt met foto, naam en detailknop.
+        /// Maakt één tabelrij aan voor een patiënt met kolommen: naam, geboortedatum, gsm, e-mail, detailknop.
         /// </summary>
-        private Border MaakPatientKaart(Patient patient)
+        private Border MaakPatientRij(Patient patient, int rijIndex)
         {
-            // buitenrand van de card
-            Border kaart = new Border();
-            kaart.Width = 180;
-            kaart.Margin = new Thickness(6);
-            kaart.BorderBrush = new SolidColorBrush(Color.FromRgb(210, 210, 210));
-            kaart.BorderThickness = new Thickness(1);
-            kaart.CornerRadius = new CornerRadius(6);
-            kaart.Padding = new Thickness(12);
-            kaart.Background = Brushes.White;
+            // afwisselende achtergrond voor leesbaarheid
+            Color achtergrond = (rijIndex % 2 == 0)
+                ? Colors.White
+                : Color.FromRgb(248, 249, 250);
 
-            // inhoud van de card
-            StackPanel sp = new StackPanel();
-            sp.HorizontalAlignment = HorizontalAlignment.Center;
+            Border rand = new Border();
+            rand.BorderBrush = new SolidColorBrush(Color.FromRgb(220, 220, 220));
+            rand.BorderThickness = new Thickness(0, 0, 0, 1);
+            rand.Padding = new Thickness(10, 8, 10, 8);
+            rand.Background = new SolidColorBrush(achtergrond);
 
-            // profielfoto
-            Image img = new Image();
-            img.Width = 90;
-            img.Height = 90;
-            img.Margin = new Thickness(0, 0, 0, 8);
-            img.HorizontalAlignment = HorizontalAlignment.Center;
+            Grid rij = new Grid();
+            rij.HorizontalAlignment = HorizontalAlignment.Stretch;
+            rij.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(200) });
+            rij.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(115) });
+            rij.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(135) });
+            rij.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            rij.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80) });
 
-            // byte[] omzetten naar BitmapImage indien foto aanwezig
-            if (patient.Profielfotodata != null)
-            {
-                BitmapImage bitmap = new BitmapImage();
-                using (MemoryStream ms = new MemoryStream(patient.Profielfotodata))
-                {
-                    bitmap.BeginInit();
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.StreamSource = ms;
-                    bitmap.EndInit();
-                }
-                img.Source = bitmap;
-            }
-            sp.Children.Add(img);
-
-            // volledige naam van de patiënt
+            // naam
             TextBlock lblNaam = new TextBlock();
-            lblNaam.Text = patient.ToString();
-            lblNaam.TextWrapping = TextWrapping.Wrap;
-            lblNaam.HorizontalAlignment = HorizontalAlignment.Center;
-            lblNaam.FontWeight = FontWeights.SemiBold;
-            sp.Children.Add(lblNaam);
+            lblNaam.Text = patient.Voornaam + " " + patient.Achternaam;
+            lblNaam.VerticalAlignment = VerticalAlignment.Center;
+            lblNaam.TextTrimming = TextTrimming.CharacterEllipsis;
+            Grid.SetColumn(lblNaam, 0);
+            rij.Children.Add(lblNaam);
 
-            // knop om naar de detailpagina te navigeren
+            // geboortedatum
+            TextBlock lblGeboortedatum = new TextBlock();
+            lblGeboortedatum.Text = patient.Geboortedatum.ToString("dd/MM/yyyy");
+            lblGeboortedatum.VerticalAlignment = VerticalAlignment.Center;
+            Grid.SetColumn(lblGeboortedatum, 1);
+            rij.Children.Add(lblGeboortedatum);
+
+            // gsm
+            TextBlock lblGsm = new TextBlock();
+            lblGsm.Text = string.IsNullOrEmpty(patient.Gsm) ? "—" : patient.Gsm;
+            lblGsm.VerticalAlignment = VerticalAlignment.Center;
+            Grid.SetColumn(lblGsm, 2);
+            rij.Children.Add(lblGsm);
+
+            // e-mail
+            TextBlock lblEmail = new TextBlock();
+            lblEmail.Text = patient.Email;
+            lblEmail.VerticalAlignment = VerticalAlignment.Center;
+            lblEmail.TextTrimming = TextTrimming.CharacterEllipsis;
+            Grid.SetColumn(lblEmail, 3);
+            rij.Children.Add(lblEmail);
+
+            // detailknop
             Button btnDetails = new Button();
             btnDetails.Content = "Details";
-            btnDetails.Margin = new Thickness(0, 10, 0, 0);
-            btnDetails.Padding = new Thickness(0, 5, 0, 5);
+            btnDetails.Padding = new Thickness(8, 3, 8, 3);
             btnDetails.Tag = patient.Id;
             btnDetails.Click += BtnDetails_Click;
-            sp.Children.Add(btnDetails);
+            Grid.SetColumn(btnDetails, 4);
+            rij.Children.Add(btnDetails);
 
-            kaart.Child = sp;
-            return kaart;
+            rand.Child = rij;
+            return rand;
         }
 
         // Navigeer naar de detailpagina van de geselecteerde patiënt

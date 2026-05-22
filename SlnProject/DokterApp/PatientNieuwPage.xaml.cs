@@ -59,7 +59,8 @@ namespace DokterApp
                 nieuwPatient.Email           = TxtEmail.Text.Trim();
                 nieuwPatient.Gsm             = TxtGsm.Text.Trim();
                 nieuwPatient.Geslacht        = (GeslachtType)CboGeslacht.SelectedIndex;
-                nieuwPatient.Geboortedatum   = Convert.ToDateTime(TxtGeboortedatum.Text);
+                nieuwPatient.Geboortedatum   = DateTime.ParseExact(TxtGeboortedatum.Text.Trim(), "dd/MM/yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture);
                 nieuwPatient.Notificaties    = (NotificatieType)CboNotificaties.SelectedIndex;
                 nieuwPatient.Profielfotodata = _fotoBytes;
 
@@ -107,16 +108,27 @@ namespace DokterApp
                 TxtFout.Text = "E-mailadres is verplicht.";
                 return false;
             }
+
+            // e-mailformaat controleren
+            string email = TxtEmail.Text.Trim();
+            int atPos = email.IndexOf('@');
+            if (atPos < 1 || atPos == email.Length - 1 || email.IndexOf('.', atPos) == -1)
+            {
+                TxtFout.Text = "Voer een geldig e-mailadres in (bv. naam@domein.be).";
+                return false;
+            }
+
             if (string.IsNullOrWhiteSpace(TxtGeboortedatum.Text))
             {
                 TxtFout.Text = "Geboortedatum is verplicht (formaat: dd/MM/yyyy).";
                 return false;
             }
 
-            // geboortedatum geldigheid controleren
+            // geboortedatum geldigheid controleren (expliciet dd/MM/yyyy formaat)
             try
             {
-                Convert.ToDateTime(TxtGeboortedatum.Text);
+                DateTime.ParseExact(TxtGeboortedatum.Text.Trim(), "dd/MM/yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture);
             }
             catch (Exception)
             {
@@ -124,10 +136,15 @@ namespace DokterApp
                 return false;
             }
 
-            // wachtwoord controleren
+            // wachtwoord controleren: verplicht en minimaal 6 tekens
             if (TxtPaswoord.Password.Length == 0)
             {
                 TxtFout.Text = "Wachtwoord is verplicht.";
+                return false;
+            }
+            if (TxtPaswoord.Password.Length < 6)
+            {
+                TxtFout.Text = "Wachtwoord moet minimaal 6 tekens bevatten.";
                 return false;
             }
             if (TxtPaswoord.Password != TxtPaswoordBevestig.Password)

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PatientApp
@@ -12,6 +13,9 @@ namespace PatientApp
     /// </summary>
     public partial class AfsprakenOverzichtPage : Page
     {
+        // Bijhouden welke afspraak momenteel geselecteerd is
+        private Afspraak _geselecteerdeAfspraak;
+
         public AfsprakenOverzichtPage()
         {
             InitializeComponent();
@@ -28,9 +32,11 @@ namespace PatientApp
         /// </summary>
         private void LaadAfspraken()
         {
-            // foutmelding en paneel resetten
+            // foutmelding, paneel en selectie resetten
             TxtFout.Text = string.Empty;
             PnlAfspraken.Children.Clear();
+            _geselecteerdeAfspraak = null;
+            PnlGeselecteerd.Visibility = Visibility.Collapsed;
 
             try
             {
@@ -101,8 +107,77 @@ namespace PatientApp
             lblKlacht.Margin = new Thickness(0, 2, 0, 0);
             sp.Children.Add(lblKlacht);
 
+            // card klikbaar maken: afspraak opslaan in Tag en click-handler koppelen
+            kaart.Tag = afspraak;
+            kaart.Cursor = Cursors.Hand;
+            kaart.MouseLeftButtonUp += Kaart_Click;
+
             kaart.Child = sp;
             return kaart;
+        }
+
+        // Toon de details van de aangeklikte afspraak onderaan
+        private void Kaart_Click(object sender, MouseButtonEventArgs e)
+        {
+            Border kaart = (Border)sender;
+            _geselecteerdeAfspraak = (Afspraak)kaart.Tag;
+
+            // naam van de dokter ophalen voor de header
+            Dokter dokter = _geselecteerdeAfspraak.Dokter;
+            string dokterNaam = dokter != null ? "Dr. " + dokter.ToString() : "(onbekende dokter)";
+
+            // header en klacht invullen
+            LblGeselecteerdHeader.Text = _geselecteerdeAfspraak.Moment.ToString("dddd d MMMM yyyy 'om' HH:mm") + " — " + dokterNaam;
+            LblGeselecteerdKlacht.Text = _geselecteerdeAfspraak.Klacht;
+
+            // annuleerknop enkel tonen als de afspraak nog in de toekomst ligt
+            if (_geselecteerdeAfspraak.Moment > DateTime.Now)
+            {
+                BtnAnnuleren.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BtnAnnuleren.Visibility = Visibility.Collapsed;
+            }
+
+            // detailpaneel zichtbaar maken
+            PnlGeselecteerd.Visibility = Visibility.Visible;
+        }
+
+        // Verwijder de geselecteerde afspraak na bevestiging en herlaad de lijst
+        private void BtnAnnuleren_Click(object sender, RoutedEventArgs e)
+        {
+            if (_geselecteerdeAfspraak == null)
+            {
+                return;
+            }
+
+            // bevestiging vragen voor verwijdering
+            MessageBoxResult keuze = MessageBox.Show(
+                "Weet je zeker dat je deze afspraak wil annuleren?",
+                "Bevestigen",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Warning);
+
+            if (keuze != MessageBoxResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                // afspraak verwijderen uit de database
+                _geselecteerdeAfspraak.DeleteFromDb();
+
+                // selectie wissen, detailpaneel verbergen en lijst herladen
+                _geselecteerdeAfspraak = null;
+                PnlGeselecteerd.Visibility = Visibility.Collapsed;
+                LaadAfspraken();
+            }
+            catch (Exception ex)
+            {
+                TxtFout.Text = "Fout bij het annuleren van de afspraak: " + ex.Message;
+            }
         }
 
         // Navigeer naar het formulier voor een nieuwe afspraak

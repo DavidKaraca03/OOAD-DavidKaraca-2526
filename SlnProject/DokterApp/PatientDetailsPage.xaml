@@ -1,0 +1,97 @@
+<Page x:Class="DokterApp.PatientDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Patiëntdetails"
+      Loaded="Page_Loaded">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Paginatitel -->
+        <TextBlock Grid.Row="0" Text="Patiëntdetails"
+                   FontSize="22" FontWeight="Bold" Margin="0,0,0,16" />
+
+        <!-- Foutmelding -->
+        <TextBlock Grid.Row="1" x:Name="TxtFout"
+                   Foreground="Red" TextWrapping="Wrap" Margin="0,0,0,10" />
+
+        <!-- Patiëntgegevens -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Profielfoto -->
+            <Image Grid.Row="0" Grid.ColumnSpan="2"
+                   x:Name="ImgFoto" Width="120" Height="120"
+                   HorizontalAlignment="Left" Margin="0,0,0,20" />
+
+            <!-- Voornaam -->
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="Voornaam:" FontWeight="Bold" Margin="0,0,20,8" />
+            <TextBlock Grid.Row="1" Grid.Column="1"
+                       x:Name="LblVoornaam" Margin="0,0,0,8" />
+
+            <!-- Achternaam -->
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="Achternaam:" FontWeight="Bold" Margin="0,0,20,8" />
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       x:Name="LblAchternaam" Margin="0,0,0,8" />
+
+            <!-- E-mail -->
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="E-mail:" FontWeight="Bold" Margin="0,0,20,8" />
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       x:Name="LblEmail" Margin="0,0,0,8" />
+
+            <!-- GSM -->
+            <TextBlock Grid.Row="4" Grid.Column="0"
+                       Text="GSM:" FontWeight="Bold" Margin="0,0,20,8" />
+            <TextBlock Grid.Row="4" Grid.Column="1"
+                       x:Name="LblGsm" Margin="0,0,0,8" />
+
+            <!-- Geslacht -->
+            <TextBlock Grid.Row="5" Grid.Column="0"
+                       Text="Geslacht:" FontWeight="Bold" Margin="0,0,20,8" />
+            <TextBlock Grid.Row="5" Grid.Column="1"
+                       x:Name="LblGeslacht" Margin="0,0,0,8" />
+
+            <!-- Geboortedatum -->
+            <TextBlock Grid.Row="6" Grid.Column="0"
+                       Text="Geboortedatum:" FontWeight="Bold" Margin="0,0,20,8" />
+            <TextBlock Grid.Row="6" Grid.Column="1"
+                       x:Name="LblGeboortedatum" Margin="0,0,0,8" />
+
+            <!-- Notificaties -->
+            <TextBlock Grid.Row="7" Grid.Column="0"
+                       Text="Notificaties:" FontWeight="Bold" Margin="0,0,20,8" />
+            <TextBlock Grid.Row="7" Grid.Column="1"
+                       x:Name="LblNotificaties" Margin="0,0,0,8" />
+        </Grid>
+
+        <!-- Actieknoppen onderaan -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,20,0,0">
+            <Button Content="Wijzigen"        Click="BtnWijzigen_Click"
+                    Padding="18,6" Margin="0,0,10,0" />
+            <Button Content="Verwijderen"     Click="BtnVerwijderen_Click"
+                    Padding="18,6" Margin="0,0,10,0" Foreground="Red" />
+            <Button Content="Naar overzicht"  Click="BtnTerug_Click"
+                    Padding="18,6" />
+        </StackPanel>
+    </Grid>
+</Page>

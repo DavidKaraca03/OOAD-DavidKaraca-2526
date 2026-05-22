@@ -1,5 +1,7 @@
 using Lib;
+using System.IO;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace PatientApp
 {
@@ -16,10 +18,10 @@ namespace PatientApp
             InitializeComponent();
         }
 
-        // Navigeer naar de loginpagina bij het openen van het venster
+        // Navigeer naar de startpagina bij het openen van het venster
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            HoofdFrame.Navigate(new LoginPage());
+            HoofdFrame.Navigate(new StartPage());
         }
 
         /// <summary>
@@ -28,6 +30,27 @@ namespace PatientApp
         /// </summary>
         public void ToonNavigatie()
         {
+            // naam en initiaal van de ingelogde patiënt tonen
+            LblGebruikerNaam.Text     = IngelogdePatient.Voornaam + " " + IngelogdePatient.Achternaam;
+            LblGebruikerInitiaal.Text = IngelogdePatient.Voornaam.Substring(0, 1).ToUpper();
+
+            // profielfoto tonen indien aanwezig, anders initiaal als placeholder
+            if (IngelogdePatient.Profielfotodata != null)
+            {
+                BitmapImage bitmap = new BitmapImage();
+                using (MemoryStream ms = new MemoryStream(IngelogdePatient.Profielfotodata))
+                {
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = ms;
+                    bitmap.EndInit();
+                }
+                ImgGebruikerFoto.Source     = bitmap;
+                ImgGebruikerFoto.Visibility = Visibility.Visible;
+            }
+
+            // navigatiepaneel en topbalk zichtbaar maken
+            TopBar.Visibility = Visibility.Visible;
             NavPanel.Visibility = Visibility.Visible;
             HoofdFrame.Navigate(new AfsprakenOverzichtPage());
         }
@@ -44,9 +67,10 @@ namespace PatientApp
             HoofdFrame.Navigate(new NieuweAfspraakPage());
         }
 
-        // Navigeer naar de profielpagina (wordt geïmplementeerd in dag 6)
+        // Navigeer naar de profielpagina
         private void BtnProfiel_Click(object sender, RoutedEventArgs e)
         {
+            HoofdFrame.Navigate(new ProfielInfoPage());
         }
 
         // Afmelden: verberg navigatie en keer terug naar loginpagina
@@ -55,8 +79,11 @@ namespace PatientApp
             // ingelogde patiënt wissen
             IngelogdePatient = null;
 
-            // navigatiepaneel verbergen en terug naar login
-            NavPanel.Visibility = Visibility.Collapsed;
+            // navigatiepaneel en topbalk verbergen en terug naar login
+            TopBar.Visibility           = Visibility.Collapsed;
+            NavPanel.Visibility         = Visibility.Collapsed;
+            ImgGebruikerFoto.Source     = null;
+            ImgGebruikerFoto.Visibility = Visibility.Collapsed;
             HoofdFrame.Navigate(new LoginPage());
         }
     }

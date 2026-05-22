@@ -30,7 +30,7 @@ namespace Lib
             using (SqlConnection conn = new SqlConnection(_connString))
             {
                 conn.Open();
-                string sql = "SELECT Id, Voornaam, Achternaam, Email, Gsm, Rizivnummer, IsGeconventioneerd " +
+                string sql = "SELECT Id, Voornaam, Achternaam, Email, Gsm, Rizivnummer, IsGeconventioneerd, profielfotodata " +
                              "FROM Dokter WHERE Email = @email AND Paswoord = @paswoord";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -48,6 +48,9 @@ namespace Lib
                             d.Gsm                = reader["Gsm"].ToString();
                             d.Rizivnummer        = Convert.ToInt32(reader["Rizivnummer"]);
                             d.IsGeconventioneerd = Convert.ToBoolean(reader["IsGeconventioneerd"]);
+                            d.Profielfotodata    = reader["profielfotodata"] == DBNull.Value
+                                                       ? null
+                                                       : (byte[])reader["profielfotodata"];
                             return d;
                         }
                     }

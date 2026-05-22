@@ -31,7 +31,7 @@ namespace Lib
             using (SqlConnection conn = new SqlConnection(_connString))
             {
                 conn.Open();
-                string sql = "SELECT Id, Voornaam, Achternaam, Email, Gsm, Geslacht, Geboortedatum, Notificaties " +
+                string sql = "SELECT Id, Voornaam, Achternaam, Email, Gsm, Geslacht, Geboortedatum, Notificaties, profielfotodata " +
                              "FROM Patient WHERE Email = @email AND Paswoord = @paswoord";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
@@ -42,14 +42,17 @@ namespace Lib
                         if (reader.Read())
                         {
                             Patient p = new Patient();
-                            p.Id            = Convert.ToInt32(reader["Id"]);
-                            p.Voornaam      = reader["Voornaam"].ToString();
-                            p.Achternaam    = reader["Achternaam"].ToString();
-                            p.Email         = reader["Email"].ToString();
-                            p.Gsm           = reader["Gsm"].ToString();
-                            p.Geslacht      = (GeslachtType)Convert.ToInt32(reader["Geslacht"]);
-                            p.Geboortedatum = Convert.ToDateTime(reader["Geboortedatum"]);
-                            p.Notificaties  = (NotificatieType)Convert.ToInt32(reader["Notificaties"]);
+                            p.Id              = Convert.ToInt32(reader["Id"]);
+                            p.Voornaam        = reader["Voornaam"].ToString();
+                            p.Achternaam      = reader["Achternaam"].ToString();
+                            p.Email           = reader["Email"].ToString();
+                            p.Gsm             = reader["Gsm"].ToString();
+                            p.Geslacht        = (GeslachtType)Convert.ToInt32(reader["Geslacht"]);
+                            p.Geboortedatum   = Convert.ToDateTime(reader["Geboortedatum"]);
+                            p.Notificaties    = (NotificatieType)Convert.ToInt32(reader["Notificaties"]);
+                            p.Profielfotodata = reader["profielfotodata"] == DBNull.Value
+                                                    ? null
+                                                    : (byte[])reader["profielfotodata"];
                             return p;
                         }
                     }
@@ -168,8 +171,9 @@ namespace Lib
                 cmd.Parameters.AddWithValue("@paswoord", Paswoord);
                 cmd.Parameters.AddWithValue("@geboortedatum", Geboortedatum);
                 cmd.Parameters.AddWithValue("@notificaties", (int)Notificaties);
-                cmd.Parameters.AddWithValue("@profielfotodata",
-                    Profielfotodata != null ? (object)Profielfotodata : DBNull.Value);
+                SqlParameter fotoParamInsert = new SqlParameter("@profielfotodata", System.Data.SqlDbType.Image);
+                fotoParamInsert.Value = Profielfotodata != null ? (object)Profielfotodata : DBNull.Value;
+                cmd.Parameters.Add(fotoParamInsert);
 
                 // nieuw id ophalen en bijhouden
                 Id = Convert.ToInt32(cmd.ExecuteScalar());
@@ -200,8 +204,9 @@ namespace Lib
                 cmd.Parameters.AddWithValue("@email", Email);
                 cmd.Parameters.AddWithValue("@geboortedatum", Geboortedatum);
                 cmd.Parameters.AddWithValue("@notificaties", (int)Notificaties);
-                cmd.Parameters.AddWithValue("@profielfotodata",
-                    Profielfotodata != null ? (object)Profielfotodata : DBNull.Value);
+                SqlParameter fotoParamUpdate = new SqlParameter("@profielfotodata", System.Data.SqlDbType.Image);
+                fotoParamUpdate.Value = Profielfotodata != null ? (object)Profielfotodata : DBNull.Value;
+                cmd.Parameters.Add(fotoParamUpdate);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.ExecuteNonQuery();
             }
