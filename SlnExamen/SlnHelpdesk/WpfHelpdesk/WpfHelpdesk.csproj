@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\CLHelpdesk\CLHelpdesk.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\data\helpdesk_tickets.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>data\helpdesk_tickets.csv</Link>
+    </Content>
+  </ItemGroup>
+
+</Project>
