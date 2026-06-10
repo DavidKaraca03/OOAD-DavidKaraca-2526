@@ -11,6 +11,12 @@
                        Foreground="White" FontSize="18" FontWeight="Bold"/>
         </Border>
 
+        <!-- Foutmelding voor algemene fouten (verborgen tenzij er een fout is) -->
+        <TextBlock x:Name="txtFoutmelding" DockPanel.Dock="Top"
+                   Foreground="White" Background="#C0392B"
+                   Padding="15,8" TextWrapping="Wrap"
+                   Visibility="Collapsed"/>
+
         <!-- HOOFDINHOUD -->
         <Grid Margin="10">
             <Grid.ColumnDefinitions>

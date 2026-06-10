@@ -38,11 +38,19 @@ namespace WpfHelpdesk
         /// </summary>
         private void LaadTickets()
         {
-            // tickets ophalen via de class library
-            _alleTickets = TicketRepository.GetAll();
+            try
+            {
+                // tickets ophalen via de class library
+                _alleTickets = TicketRepository.GetAll();
 
-            // gefilterde lijst tonen in de listbox
-            PasFiltersToe();
+                // gefilterde lijst tonen in de listbox
+                PasFiltersToe();
+            }
+            catch (Exception ex)
+            {
+                txtFoutmelding.Text = "Fout bij laden van tickets: " + ex.Message;
+                txtFoutmelding.Visibility = Visibility.Visible;
+            }
         }
 
         /// <summary>
@@ -117,6 +125,8 @@ namespace WpfHelpdesk
         /// </summary>
         private void Filter_Changed(object sender, RoutedEventArgs e)
         {
+            // controls kunnen nog niet bestaan tijdens InitializeComponent
+            if (lbxTickets == null) return;
             PasFiltersToe();
         }
 
@@ -195,8 +205,16 @@ namespace WpfHelpdesk
                 nieuwTicket = new SoftwareTicket(nieuwId, titel, melder, prioriteit, DateTime.Now, extraInfo);
             }
 
-            // ticket opslaan via de class library
-            TicketRepository.VoegToe(nieuwTicket);
+            try
+            {
+                // ticket opslaan via de class library
+                TicketRepository.VoegToe(nieuwTicket);
+            }
+            catch (Exception ex)
+            {
+                lblFout.Text = "Fout bij opslaan: " + ex.Message;
+                return;
+            }
 
             // formulier leegmaken na opslaan
             txtNieuwTitel.Text = "";
@@ -234,8 +252,16 @@ namespace WpfHelpdesk
             // ticket afsluiten als de gebruiker bevestigt
             if (bevestiging == MessageBoxResult.Yes)
             {
-                // afsluiten via de class library
-                TicketRepository.SluitAf(_huidigTicket.Id);
+                try
+                {
+                    // afsluiten via de class library
+                    TicketRepository.SluitAf(_huidigTicket.Id);
+                }
+                catch (Exception ex)
+                {
+                    txtDetails.Text = "Fout bij afsluiten: " + ex.Message;
+                    return;
+                }
 
                 // overzicht herladen
                 LaadTickets();
